@@ -114,7 +114,7 @@ var startGame = function()
 
             fight(pickedEnemyObj);
 
-            if (playerInfo.Health > 0 && i < enemy.names.length - 1) 
+            if (playerInfo.Health > 0 && i < enemyInfo.length - 1); 
             {
                 var storeConfirm = window.confirm("The fight is over, visit the store before the next round?");
                 if (storeConfirm)
@@ -133,11 +133,28 @@ var startGame = function()
 
     //end function 
     var endGame = function() {
+
         window.alert("The game has now ended. Let's see how you did!");
+
+        var highScore = localStorage.getItem("highScore");
+        if (highScore === null)
+        {
+            highScore = 0;
+        }
+        if (playerInfo.money > highScore)
+        {
+            localStorage.setItem("highScore", playerInfo.money);
+            localStorage.setItem("name", playerInfo.name);
+            alert(playerInfo.name + " now has th high score of " + playerInfo.money + " !");
+        }
+        else
+        {
+            alert(playerInfo.name + " did not beat the high score of " + highScore + " maybe next time!");
+        }
 
         if (playerInfo.Health > 0) 
         {
-            window.alert("Great job, you've survived the game! You now have a score of " + playerInfo.money + ".");    
+            window.alert("Great job, you've survived the game! You now have a score of " + playerInfo.money + ".");
         }
         else 
         {
@@ -179,7 +196,7 @@ var fight = function(enemy) {
 
             if (enemy.Health <= 0) 
             {
-                window.alert(enemyName + " has died! ");
+                window.alert(enemy.name + " has died! ");
                 playerInfo.money = playerInfo.money + 20;
                 //
             break;
