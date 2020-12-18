@@ -32,7 +32,7 @@ var fightOrSkip = function()
             {
                 window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
                 playerInfo.money = Math.max(0, playerInfo.money - 10);
-                //shop();
+                shop();
 
                 return true;
                 return false;
@@ -160,6 +160,7 @@ var fight = function(enemy) {
 
     while (enemy.Health > 0  && playerInfo.Health > 0) 
     {
+        debugger;
         if(fightOrSkip())
         {
             break;
@@ -198,21 +199,19 @@ var fight = function(enemy) {
     var shop = function() 
     {
         var shopOptionPrompt = window.prompt(
-            "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice.");
+            "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter: 1 for 'REFILL', 2 for' UPGRADE', or 3 'LEAVE'.");
+        
+        shopOptionPrompt = parseInt(shopOptionPrompt);
         
         switch(shopOptionPrompt) 
         {
-            case "REFILL":
-            case "refill":
+            case 1:
                 playerInfo.refillHealth();
                 break;
-            case "UPGRADE":
-            case "upgrade":
-               playerInfo.upgradeAttack
+            case 2:
+               playerInfo.upgradeAttack();
                 break;
-            case "LEAVE":
-            case "leave":
-
+            case 3:
                 window.alert("Leaving store.");
                 break;
             default:
