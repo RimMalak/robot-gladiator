@@ -98,38 +98,38 @@ var enemyInfo =
 
 //Start function
 
-var startGame = function() {  
+var startGame = function() 
+{  
 
     playerInfo.reset();
     
-    for (var i = 0; i < enemyInfo.length; i++) {
-        if (playerInfo.Health > 0) {
-            window.alert("Welcome to Robot Gladiator! Round " + (i + 1));
-            
-
-        var pickedEnemyObj = enemyInfo[i];
-        pickedEnemyObj.Health =  randomNumber(40, 60) ;
-
-        fight(pickedEnemyObj);
-
-        if (playerInfo.Health > 0 && i < enemy.names.length - 1) 
+    for (var i = 0; i < enemyInfo.length; i++) 
+    {
+        if (playerInfo.Health > 0) 
         {
-            var storeConfirm = window.confirm("The fight is over, visit the store before the next round?");
-            if (storeConfirm)
+            window.alert("Welcome to Robot Gladiator! Round " + (i + 1));
+
+            var pickedEnemyObj = enemyInfo[i];
+            pickedEnemyObj.Health =  randomNumber(40, 60) ;
+
+            fight(pickedEnemyObj);
+
+            if (playerInfo.Health > 0 && i < enemy.names.length - 1) 
             {
-            shop();
-            }
-        }
-        
+                var storeConfirm = window.confirm("The fight is over, visit the store before the next round?");
+                if (storeConfirm)
+                    {
+                    shop();
+                    }
+            } 
         }
         else 
         {
             break;
         }
-
     }
-        endGame();
-    };
+    endGame();
+};
 
     //end function 
     var endGame = function() {
@@ -158,41 +158,54 @@ var startGame = function() {
 
 var fight = function(enemy) {
 
+    var isPlayerTurn = true;
+    if (Math.random() > 0.5)
+    {
+        isPlayerTurn = false;
+    }
+
     while (enemy.Health > 0  && playerInfo.Health > 0) 
     {
-        debugger;
-        if(fightOrSkip())
+        if (isPlayerTurn)
         {
-            break;
-        };
-        
-        var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
-        enemy.Health = Math.max( 0, enemy.Health - damage);
-        console.log(playerInfo.name + " attacked " + enemy.name + ". " + enemy.name + " now has " + enemy.Health + " health remaining.");
+            if(fightOrSkip())
+            {
+                break;
+            }
+            
+            var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
+            enemy.Health = Math.max( 0, enemy.Health - damage);
+            console.log(playerInfo.name + " attacked " + enemy.name + ". " + enemy.name + " now has " + enemy.Health + " health remaining.");
 
-        if (enemy.Health <= 0) {
-            window.alert(enemyName + " has died! ");
-            playerInfo.money = playerInfo.money + 20;
-            //
-        break;
+            if (enemy.Health <= 0) 
+            {
+                window.alert(enemyName + " has died! ");
+                playerInfo.money = playerInfo.money + 20;
+                //
+            break;
+            }
+            else
+            {
+                window.alert(enemy.name + " still has " + enemy.Health + " health left.");
+            }
         }
         else
-        {
-            window.alert(enemy.name + " still has " + enemy.Health + " health left.");
-        }
-        var damage = randomNumber(enemy.attack -3, enemy.attack);
-        playerInfo.Health = Math.max( 0, playerInfo.Health - damage);
-        console.log(enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " has now " + playerInfo.Health + " health remaining.");
+        { 
+            var damage = randomNumber(enemy.attack -3, enemy.attack);
+            playerInfo.Health = Math.max( 0, playerInfo.Health - damage);
+            console.log(enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " has now " + playerInfo.Health + " health remaining.");
 
-        if (playerInfo.Health <= 0) 
-        {
-            window.alert(playerInfo.name + " has died!");
-            break;
-        }   
-        else 
-        {
-                window.alert(playerInfo.name + " still has " + playerInfo.Health + " health left.");
-        }
+            if (playerInfo.Health <= 0) 
+            {
+                window.alert(playerInfo.name + " has died!");
+                break;
+            }   
+            else 
+            {
+                    window.alert(playerInfo.name + " still has " + playerInfo.Health + " health left.");
+            }
+        } 
+        isPlayerTurn = !isPlayerTurn;
     }
 };
       
